@@ -1,0 +1,25 @@
+{
+  "name": "ygg-read",
+  "version": "1.0.0",
+  "description": "Web app to read ygg feed rss, notify and download files",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "fake"
+  },
+  "author": "Orphé Houessinon",
+  "license": "ISC",
+  "keywords": [
+    "feed-rss",
+    "rss-usage",
+    "ygg-torrent",
+    "express-js",
+    "firebase"
+  ],
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
