@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "fake"
+    "url": "git@github.com:Orphe-H/ygg-read.git"
   },
   "author": "Orphé Houessinon",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "firebase"
   ],
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "firebase": "^10.4.0"
   }
 }
