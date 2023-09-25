@@ -13,7 +13,7 @@ class TargetController extends Controller
      */
     public function index()
     {
-        $targets = Target::where('user_id', request()->user()->id)->paginate(request('per_page', 20));
+        $targets = Target::where('user_id', request()->user()->id)->orderBy('id', 'desc')->paginate(request('per_page', 20));
 
         return view('targets.index', compact('targets'));
     }

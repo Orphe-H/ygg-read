@@ -26,10 +26,10 @@
                         </thead>
                         <tbody>
                             @foreach ($targets as $target)
-                                <tr class="leading-8">
-                                    <td class="pl-2">{{ $target->id }}</td>
-                                    <td class="pl-2">{{ $target->name }}</td>
-                                    <td class="pl-2">{{ $target->created_at->format('d-m-Y à h:i') }}</td>
+                                <tr class="leading-7">
+                                    <td class="pl-3">{{ $target->id }}</td>
+                                    <td class="pl-3">{{ $target->name }}</td>
+                                    <td class="pl-3">{{ $target->created_at->format('d-m-Y à h:i') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
