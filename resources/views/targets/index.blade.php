@@ -9,7 +9,7 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="pb-4 flex flex-wrap justify-end">
-                <a class="rounded-lg bg-blue-500 hover:bg-blue-600 px-3 py-1 text-white font-bold" href="{{ route('targets.create') }}">Ajouter</a>
+                <a class="rounded-lg bg-blue-600 hover:bg-blue-700 px-3 py-1 text-white font-bold" href="{{ route('targets.create') }}">Ajouter</a>
             </div>
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -17,10 +17,11 @@
 
                     <table class="w-full table-fixed">
                         <thead class="bg-slate-50">
-                          <tr class="leading-8 px-2">
-                            <th class="border border-slate-300">#</th>
-                            <th class="border border-slate-300">{{ __('Name') }}</th>
-                            <th class="border border-slate-300">{{ __('Created at') }}</th>
+                          <tr class="leading-8">
+                            <th class="">#</th>
+                            <th class="">{{ __('Name') }}</th>
+                            <th class="">{{ __('Created at') }}</th>
+                            <th>{{ __('Actions') }}</th>
                           </tr>
                         </thead>
                         <tbody>

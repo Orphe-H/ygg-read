@@ -8,17 +8,12 @@ use App\Models\Target;
 
 class TargetController extends Controller
 {
-    public function __construct()
-    {
-
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $targets = Target::where('user_id', request()->user()->id)->paginate(request('per_page', 10));
+        $targets = Target::where('user_id', request()->user()->id)->paginate(request('per_page', 20));
 
         return view('targets.index', compact('targets'));
     }
