@@ -5,7 +5,7 @@ namespace App\Http\Requests\Target;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreTargetRequest extends FormRequest
+class TargetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class StoreTargetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', Rule::unique('targets', 'name')->where('user_id', request()->user()->id)],
+            'name' => ['required', 'string', 'max:255', Rule::unique('targets', 'name')->ignore($this->target?->id)],
         ];
     }
 }

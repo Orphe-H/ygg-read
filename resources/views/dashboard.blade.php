@@ -7,7 +7,7 @@
 
     <div class="py-9">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="pb-2">
+            <div class="pb-4">
                 {{ __('Welcome') . '! ' . auth()->user()->name }}
             </div>
 

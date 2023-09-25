@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\DailyFoundTarget;
 use App\Models\Target;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use SimpleXMLElement;
 
 class FetchTargetTorrents extends Command
 {
@@ -28,25 +29,70 @@ class FetchTargetTorrents extends Command
      */
     public function handle()
     {
-        //fetch ygg feed
+        if (empty(config('config.ygg_url'))) {
+            $this->error('Ygg URL not defined');
+            return Command::FAILURE;
+        }
 
-        //TODO: check config is set
+        if (empty(config('config.ygg_id'))) {
+            $this->error('Ygg ID not defined');
+            return Command::FAILURE;
+        }
+
+        if (empty(config('config.ygg_key'))) {
+            $this->error('Ygg KEY not defined');
+            return Command::FAILURE;
+        }
 
         $url = config('config.ygg_url')
             . '?action=generate&type=cat' . '&id=' . config('config.ygg_id')
             . '&passkey=' . config('config.ygg_key');
 
         $rss = Http::get($url);
+        $xml = new SimpleXMLElement($rss);
 
+        foreach ($xml->channel->item as $item) {
 
-        // use the link below
+            $description = [];
+            foreach (explode('<br/>', $item->description) as $row) {
+                [$key, $val] = explode(':', $row, 2);
+                $description[trim($key)] = trim($val);
+            }
 
-        Log::debug($rss);
+            $title = (array) $item->title;
+            $link = (array) $item->link;
+            $category = (array) $item->category;
+            $pubDate = (array) $item->pubDate;
+            $guid = (array) $item->guid;
 
-        Target::chunk(50, function ($targets) {
+            $items[] = [
+                'title' => $title[0],
+                'link' => $link[0],
+                'category' => $category[0],
+                'category_domain' => $category['@attributes']['domain'],
+                'description' => $description,
+                'guid' => $guid[0],
+                'pubDate' => $pubDate[0],
+            ];
+        }
+
+        $items = collect($items);
+
+        Target::notFoundToday()->chunk(50, function ($targets) use ($items) {
             foreach ($targets as $target) {
+                $result = $items->filter(function ($item) use ($target) {
+                    return false !== stristr($item['title'], $target->name);
+                })->first();
 
+                if ($result) {
+                    $dailyTarget = DailyFoundTarget::create([
+                        'target_id' => $target->id,
+                        'data' => $result,
+                    ]);
+                }
             }
         });
+
+        return Command::SUCCESS;
     }
 }

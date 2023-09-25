@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Target\StoreTargetRequest;
-use App\Http\Requests\Target\UpdateTargetRequest;
+use App\Http\Requests\Target\TargetRequest;
 use App\Models\Target;
 
 class TargetController extends Controller
@@ -13,7 +12,7 @@ class TargetController extends Controller
      */
     public function index()
     {
-        $targets = Target::where('user_id', request()->user()->id)->orderBy('id', 'desc')->paginate(request('per_page', 20));
+        $targets = Target::orderBy('id', 'desc')->paginate(request('per_page', 20));
 
         return view('targets.index', compact('targets'));
     }
@@ -31,9 +30,9 @@ class TargetController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTargetRequest $request)
+    public function store(TargetRequest $request)
     {
-        $target = Target::create($request->validated() + ['user_id' => request()->user()->id]);
+        $target = Target::create($request->validated() + ['created_by' => request()->user()->id]);
 
         return redirect()->route('targets.index')->with('success', 'Target  created successfully');
     }
@@ -57,9 +56,11 @@ class TargetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTargetRequest $request, Target $target)
+    public function update(TargetRequest $request, Target $target)
     {
-        //
+        $target->update($request->validated());
+
+        return redirect()->route('targets.index')->with('success', 'Target updated successfully');
     }
 
     /**
