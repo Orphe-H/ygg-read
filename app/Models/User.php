@@ -43,5 +43,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'approved' => 'boolean',
     ];
+
+    public function isApproved(): bool
+    {
+        return $this->approved;
+    }
 }
