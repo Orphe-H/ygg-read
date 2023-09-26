@@ -34,7 +34,7 @@ class BaseNotification extends Notification
     {
         $mailMessage =  (new MailMessage)
             ->subject($this->data['subject'])
-            ->greeting($this->data['greeting'] ?? "Bonjour Monsieur/Madame");
+            ->greeting($this->data['greeting'] ?? "Hi.");
 
         if (is_array($this->data['message'])) {
             foreach ($this->data['message'] as $line) {
