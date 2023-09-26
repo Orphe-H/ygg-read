@@ -95,12 +95,12 @@ class FetchTargetTorrents extends Command
                     $notifData = [
                         'subject' => "L'un de vos torrents est disponible.",
                         'message' => [
-                            'Clique sur le lien ci-dessous pour aller sur le site et télécharger.',
-                            'Tableau de bord: ' . new HtmlString('<a href="'. config('app.url') .'">Tableau de bord</a>')
+                            new HtmlString('<a href="'. config('app.url') . '/dashboard">Tableau de bord.</a>'),
+                            'Le fichier est disponible en téléchargement.',
                         ],
                     ];
 
-                    $target->user->notify(new BaseNotification(['mail'], $notifData, ['text' => 'Consulter', 'url' => $result['guid']]));
+                    $dailyTarget->target->createdBy->notify(new BaseNotification(['mail'], $notifData, ['text' => 'Consulter', 'url' => $result['guid']]));
                 }
             }
         });
