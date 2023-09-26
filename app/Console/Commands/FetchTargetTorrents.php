@@ -4,8 +4,10 @@ namespace App\Console\Commands;
 
 use App\Models\DailyFoundTarget;
 use App\Models\Target;
+use App\Notifications\BaseNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\HtmlString;
 use SimpleXMLElement;
 
 class FetchTargetTorrents extends Command
@@ -89,6 +91,16 @@ class FetchTargetTorrents extends Command
                         'target_id' => $target->id,
                         'data' => $result,
                     ]);
+
+                    $notifData = [
+                        'subject' => "L'un de vos torrents est disponible.",
+                        'message' => [
+                            'Clique sur le lien ci-dessous pour aller sur le site et télécharger.',
+                            'Tableau de bord: ' . new HtmlString('<a href="'. config('app.url') .'">Tableau de bord</a>')
+                        ],
+                    ];
+
+                    $target->user->notify(new BaseNotification(['mail'], $notifData, ['text' => 'Consulter', 'url' => $result['guid']]));
                 }
             }
         });
