@@ -15,7 +15,7 @@
                 @foreach ($torrents as $torrent)
                     <div
                         class="bg-white dark:bg-gray-800 overflow-hidden shadow-lg hover:shadow-blue-200 hover:shadow-2xl sm:rounded-lg p-5 text-gray-900 dark:text-gray-100">
-                        <div class="text-center font-bold text-lg text-blue-600">{{ $torrent->data['title'] }}</div>
+                        <div class="text-center font-bold text-lg text-blue-600 break-words">{{ $torrent->data['title'] }}</div>
                         <div class="text-center mt-2">
                             <a href="{{ $torrent->data['category_domain'] }}" target="_blank"
                                 class="text-gray-500 dark:text-gray-400 hover:text-gray-800">
